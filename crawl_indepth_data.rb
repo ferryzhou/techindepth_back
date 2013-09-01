@@ -91,7 +91,8 @@ def get_sina_items
 
   p 'get sina items .....'
 
-  page_url = 'http://roll.tech.sina.com.cn/iframe_famous/index.shtml'
+  #page_url = 'http://tech.sina.com.cn/'
+  page_url = 'sina_tech.html'
 
   content = open(page_url).read
   
@@ -107,7 +108,7 @@ def get_sina_items
   #p doc.encoding
   p doc.errors
   
-  items = doc.search('ul li')
+  items = doc.search("div[blktitle='深度阅读']").search('ul li')
   
   p "found #{items.size} items"
   
@@ -122,10 +123,6 @@ def get_sina_items
       nitem['source'] = 'sina'
       nitem['link'] = a['href']
       nitem['title'] = a.content
-      span_segs = item.search('span').first.content.split(' ')
-      nitem['magzine'] = span_segs.first.gsub(/[(《》杂志]/, '')
-      asegs = a['href'].split('/')
-      nitem['pubdate'] = DateTime.parse(asegs[-2] + 'T' + span_segs.last)
       nitems.push(nitem)
       p nitem.to_s
     rescue => e

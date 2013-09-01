@@ -26,3 +26,4 @@ def show_sina
 end
 
 #show_sina()
+p get_sina_items().to_json
